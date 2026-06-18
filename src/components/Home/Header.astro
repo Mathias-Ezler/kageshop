@@ -1,45 +1,38 @@
 ---
 ---
 
-<header class="w-full border-b border-gray-200 bg-white">
+<header class="w-full border-b border-gray-200 bg-white relative z-50">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="flex h-14 items-center justify-between">
   
         <!-- Logo -->
-        <a href="/" class="text-sm font-black tracking-widest text-black uppercase shrink-0">
+        <a href="/" class="text-sm font-black tracking-widest text-black uppercase shrink-0 cursor-pointer">
           Kage Store
         </a>
   
         <!-- Nav links (desktop) -->
         <nav class="hidden md:flex items-center gap-8">
-          <a href="/productos" class="text-xs font-semibold tracking-widest text-gray-800 uppercase hover:text-black transition-colors">
+          <a href="/productos" class="text-xs font-semibold tracking-widest text-gray-800 uppercase hover:text-black transition-colors cursor-pointer">
             Productos
           </a>
-          <a href="/nosotros" class="text-xs font-semibold tracking-widest text-gray-800 uppercase hover:text-black transition-colors">
+          <a href="/nosotros" class="text-xs font-semibold tracking-widest text-gray-800 uppercase hover:text-black transition-colors cursor-pointer">
             Nosotros
           </a>
-          <a href="/preguntas-frecuentes" class="text-xs font-semibold tracking-widest text-gray-800 uppercase hover:text-black transition-colors">
+          <a href="/preguntas-frecuentes" class="text-xs font-semibold tracking-widest text-gray-800 uppercase hover:text-black transition-colors cursor-pointer">
             Preguntas Frecuentes
           </a>
         </nav>
   
         <!-- Right actions -->
         <div class="flex items-center gap-4">
+  
           <!-- Language selector -->
-          <button class="hidden md:block text-xs font-semibold tracking-widest text-gray-800 uppercase hover:text-black transition-colors">
+          <button class="hidden md:block text-xs font-semibold tracking-widest text-gray-800 uppercase hover:text-black transition-colors cursor-pointer">
             ES
           </button>
   
-          <!-- Dark mode toggle -->
-          <button aria-label="Cambiar modo oscuro" class="text-gray-700 hover:text-black transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" />
-            </svg>
-          </button>
-  
-          <!-- Search -->
-          <button aria-label="Buscar" class="text-gray-700 hover:text-black transition-colors">
+          <!-- Search toggle -->
+          <button id="search-toggle" aria-label="Buscar" class="text-gray-700 hover:text-black transition-colors cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round"
                 d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z" />
@@ -47,47 +40,187 @@
           </button>
   
           <!-- Cart -->
-          <button aria-label="Carrito" class="relative text-gray-700 hover:text-black transition-colors">
+          <button aria-label="Carrito" class="relative text-gray-700 hover:text-black transition-colors cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round"
                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M7 13L5.4 5M10 21a1 1 0 100-2 1 1 0 000 2zm7 0a1 1 0 100-2 1 1 0 000 2z" />
             </svg>
           </button>
   
-          <!-- Hamburger (mobile) -->
-          <button id="menu-toggle" aria-label="Abrir menú" class="md:hidden text-gray-700 hover:text-black transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+          <!-- Hamburger / X (mobile) -->
+          <button
+            id="menu-toggle"
+            aria-label="Abrir menú"
+            class="md:hidden relative w-6 h-6 flex flex-col justify-center items-center cursor-pointer text-gray-700 hover:text-black"
+          >
+            <span id="bar-top"    class="hamburger-bar absolute block h-[1.5px] bg-current transition-all duration-300 ease-in-out w-5 -translate-y-[6px]"></span>
+            <span id="bar-mid"    class="hamburger-bar absolute block h-[1.5px] bg-current transition-all duration-300 ease-in-out w-5"></span>
+            <span id="bar-bottom" class="hamburger-bar absolute block h-[1.5px] bg-current transition-all duration-300 ease-in-out w-5  translate-y-[6px]"></span>
           </button>
+  
         </div>
       </div>
     </div>
+  </header>
   
-    <!-- Mobile menu -->
-    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white">
-      <nav class="flex flex-col px-4 py-4 gap-4">
-        <a href="/productos" class="text-xs font-semibold tracking-widest text-gray-800 uppercase hover:text-black transition-colors">
+  <!-- Search overlay -->
+  <div
+    id="search-overlay"
+    class="fixed inset-0 z-[60] hidden"
+    aria-hidden="true"
+  >
+    <div id="search-backdrop" class="absolute inset-0 bg-black/30 backdrop-blur-sm"></div>
+  
+    <div class="relative z-10 bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 py-4">
+      <div class="mx-auto max-w-7xl flex items-center gap-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z" />
+        </svg>
+        <input
+          id="search-input"
+          type="search"
+          placeholder="Buscar productos..."
+          class="flex-1 text-sm text-gray-800 placeholder-gray-400 bg-transparent outline-none tracking-wide"
+          autocomplete="off"
+        />
+        <button id="search-close" aria-label="Cerrar búsqueda" class="text-gray-500 hover:text-black transition-colors text-xs font-semibold tracking-widest uppercase cursor-pointer">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mobile menu overlay -->
+  <div
+    id="mobile-menu"
+    class="fixed inset-0 z-[55] hidden md:hidden"
+    aria-hidden="true"
+  >
+    <!-- Backdrop -->
+    <div id="mobile-backdrop" class="absolute inset-0 bg-black/40"></div>
+  
+    <!-- Slide-down panel -->
+    <div
+      id="mobile-panel"
+      class="relative z-10 mt-14 bg-white shadow-xl overflow-hidden
+             translate-y-[-8px] opacity-0 transition-all duration-300 ease-out"
+    >
+      <nav class="flex flex-col divide-y divide-gray-100">
+        <a href="/productos"
+           class="flex items-center justify-between px-6 py-4 text-xs font-semibold tracking-widest text-gray-800 uppercase hover:bg-gray-50 hover:text-black transition-colors cursor-pointer">
           Productos
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+          </svg>
         </a>
-        <a href="/nosotros" class="text-xs font-semibold tracking-widest text-gray-800 uppercase hover:text-black transition-colors">
+        <a href="/nosotros"
+           class="flex items-center justify-between px-6 py-4 text-xs font-semibold tracking-widest text-gray-800 uppercase hover:bg-gray-50 hover:text-black transition-colors cursor-pointer">
           Nosotros
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+          </svg>
         </a>
-        <a href="/preguntas-frecuentes" class="text-xs font-semibold tracking-widest text-gray-800 uppercase hover:text-black transition-colors">
+        <a href="/preguntas-frecuentes"
+           class="flex items-center justify-between px-6 py-4 text-xs font-semibold tracking-widest text-gray-800 uppercase hover:bg-gray-50 hover:text-black transition-colors cursor-pointer">
           Preguntas Frecuentes
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+          </svg>
         </a>
-        <button class="text-left text-xs font-semibold tracking-widest text-gray-800 uppercase hover:text-black transition-colors">
-          ES
+        <button
+          class="flex items-center justify-between px-6 py-4 text-xs font-semibold tracking-widest text-gray-800 uppercase hover:bg-gray-50 hover:text-black transition-colors cursor-pointer w-full text-left">
+          ES — Idioma
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+          </svg>
         </button>
       </nav>
     </div>
-  </header>
+  </div>
   
   <script>
-    const toggle = document.getElementById("menu-toggle");
-    const menu = document.getElementById("mobile-menu");
-    toggle?.addEventListener("click", () => {
-      menu?.classList.toggle("hidden");
+    /* ── Hamburger animation ── */
+    const menuToggle     = document.getElementById("menu-toggle")!;
+    const mobileMenu     = document.getElementById("mobile-menu")!;
+    const mobileBackdrop = document.getElementById("mobile-backdrop")!;
+    const mobilePanel    = document.getElementById("mobile-panel")!;
+    const barTop         = document.getElementById("bar-top")!;
+    const barMid         = document.getElementById("bar-mid")!;
+    const barBottom      = document.getElementById("bar-bottom")!;
+  
+    let menuOpen = false;
+  
+    function animateToX() {
+      barTop.style.transform    = "translateY(0) rotate(45deg)";
+      barMid.style.opacity      = "0";
+      barMid.style.transform    = "scaleX(0)";
+      barBottom.style.transform = "translateY(0) rotate(-45deg)";
+    }
+  
+    function animateToHamburger() {
+      barTop.style.transform    = "translateY(-6px) rotate(0deg)";
+      barMid.style.opacity      = "1";
+      barMid.style.transform    = "scaleX(1)";
+      barBottom.style.transform = "translateY(6px) rotate(0deg)";
+    }
+  
+    function openMobileMenu() {
+      menuOpen = true;
+      mobileMenu.classList.remove("hidden");
+      mobileMenu.setAttribute("aria-hidden", "false");
+      animateToX();
+      // Trigger slide-in after a frame so transition runs
+      requestAnimationFrame(() => {
+        mobilePanel.style.transform = "translateY(0)";
+        mobilePanel.style.opacity   = "1";
+      });
+    }
+  
+    function closeMobileMenu() {
+      menuOpen = false;
+      mobilePanel.style.transform = "translateY(-8px)";
+      mobilePanel.style.opacity   = "0";
+      animateToHamburger();
+      setTimeout(() => {
+        mobileMenu.classList.add("hidden");
+        mobileMenu.setAttribute("aria-hidden", "true");
+      }, 300);
+    }
+  
+    menuToggle.addEventListener("click", () => {
+      menuOpen ? closeMobileMenu() : openMobileMenu();
+    });
+  
+    mobileBackdrop.addEventListener("click", closeMobileMenu);
+  
+    /* ── Search overlay ── */
+    const searchToggle   = document.getElementById("search-toggle")!;
+    const searchOverlay  = document.getElementById("search-overlay")!;
+    const searchBackdrop = document.getElementById("search-backdrop")!;
+    const searchClose    = document.getElementById("search-close")!;
+    const searchInput    = document.getElementById("search-input") as HTMLInputElement;
+  
+    function openSearch() {
+      searchOverlay.classList.remove("hidden");
+      searchOverlay.setAttribute("aria-hidden", "false");
+      setTimeout(() => searchInput.focus(), 50);
+    }
+  
+    function closeSearch() {
+      searchOverlay.classList.add("hidden");
+      searchOverlay.setAttribute("aria-hidden", "true");
+      searchInput.value = "";
+    }
+  
+    searchToggle.addEventListener("click", openSearch);
+    searchClose.addEventListener("click", closeSearch);
+    searchBackdrop.addEventListener("click", closeSearch);
+  
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeSearch();
+        if (menuOpen) closeMobileMenu();
+      }
     });
   </script>
   
