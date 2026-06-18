@@ -1,0 +1,99 @@
+---
+interface Category {
+  number: string;
+  name: string;
+  href: string;
+  imageSrc?: string;
+  imageAlt?: string;
+}
+
+interface Props {
+  categories?: Category[];
+}
+
+const defaultCategories: Category[] = [
+  {
+    number: "01",
+    name: "Software",
+    href: "/productos/software",
+    imageSrc: "/img/software.jpg",
+    imageAlt: "Software de alto rendimiento",
+  },
+  {
+    number: "02",
+    name: "Periféricos",
+    href: "/productos/perifericos",
+    imageSrc: "/img/perifericos.jpg",
+    imageAlt: "Periféricos gaming y profesionales",
+  },
+  {
+    number: "03",
+    name: "Componentes",
+    href: "/productos/componentes",
+    imageSrc: "/img/componentes.jpg",
+    imageAlt: "Componentes de PC",
+  },
+];
+
+const { categories = defaultCategories } = Astro.props;
+
+const [first, ...rest] = categories;
+---
+
+<section class="w-full px-4 sm:px-6 lg:px-8 py-8">
+  <div class="mx-auto max-w-7xl">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-2" style="height: clamp(340px, 55vw, 600px);">
+
+      <!-- Left: large card (full height) -->
+      <a
+        href={first.href}
+        class="group relative overflow-hidden bg-gray-200 block h-full"
+      >
+        {first.imageSrc ? (
+          <img
+            src={first.imageSrc}
+            alt={first.imageAlt}
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div class="absolute inset-0 w-full h-full" style="background-image: repeating-conic-gradient(#d1d5db 0% 25%, #e5e7eb 0% 50%); background-size: 24px 24px;" />
+        )}
+        <!-- Gradient overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+        <!-- Label -->
+        <span class="absolute bottom-4 left-4 text-white text-xs font-semibold tracking-widest uppercase">
+          {first.number} / {first.name}
+        </span>
+      </a>
+
+      <!-- Right: two stacked cards -->
+      <div class="flex flex-col gap-2 h-full">
+        {rest.map((cat) => (
+          <a
+            href={cat.href}
+            class="group relative overflow-hidden bg-gray-300 flex-1 block"
+          >
+            {cat.imageSrc ? (
+              <img
+                src={cat.imageSrc}
+                alt={cat.imageAlt}
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            ) : (
+              <div class="absolute inset-0 w-full h-full" style="background-image: repeating-conic-gradient(#c8cfd8 0% 25%, #dde1e8 0% 50%); background-size: 24px 24px;" />
+            )}
+            <!-- Gradient overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+            <!-- Label -->
+            <span class="absolute bottom-4 left-4 text-white text-xs font-semibold tracking-widest uppercase">
+              {cat.number} / {cat.name}
+            </span>
+          </a>
+        ))}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="w-full border-0 border-t border-gray-300 mt-5" />

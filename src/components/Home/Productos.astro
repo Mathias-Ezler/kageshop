@@ -1,0 +1,86 @@
+---
+interface Product {
+  id: string | number;
+  name: string;
+  price: number;
+  href: string;
+  imageSrc?: string;
+  imageAlt?: string;
+}
+
+interface Props {
+  title?: string;
+  viewAllHref?: string;
+  products?: Product[];
+}
+
+const defaultProducts: Product[] = [
+  { id: 1, name: "Kage K1 Pro",        price: 0,  href: "/productos/kage-k1-pro",        imageSrc: "/img/fondo2.jpg", imageAlt: "Kage K1 Pro" },
+  { id: 2, name: "Kage M2 Wireless",   price: 0,  href: "/productos/kage-m2-wireless",   imageSrc: "/img/fondo2.jpg", imageAlt: "Kage M2 Wireless" },
+  { id: 3, name: "Kage OS X Licence",  price: 0,  href: "/productos/kage-os-x-licence",  imageSrc: "/img/fondo2.jpg", imageAlt: "Kage OS X Licence" },
+  { id: 4, name: "Kage Core I9",       price: 0,  href: "/productos/kage-core-i9",       imageSrc: "/img/fondo2.jpg", imageAlt: "Kage Core I9" },
+];
+
+const {
+  title = "Listos Para Enviar",
+  viewAllHref = "/productos",
+  products = defaultProducts,
+} = Astro.props;
+
+const formatPrice = (price: number) =>
+  "Gs. " + price.toLocaleString("es-PY");
+---
+
+<section class="w-full px-4 sm:px-6 lg:px-8 py-12">
+  <div class="mx-auto max-w-7xl">
+
+    <!-- Header row -->
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-sm font-semibold tracking-widest text-black uppercase">
+        {title}
+      </h2>
+      <a
+        href={viewAllHref}
+        class="text-xs font-semibold tracking-widest text-gray-500 uppercase hover:text-black transition-colors"
+      >
+        Ver Todos
+      </a>
+    </div>
+
+    <!-- Product grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      {products.map((product) => (
+        <a href={product.href} class="group block">
+
+          <!-- Image -->
+          <div class="relative aspect-square overflow-hidden bg-gray-100 mb-3">
+            {product.imageSrc ? (
+              <img
+                src={product.imageSrc}
+                alt={product.imageAlt}
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            ) : (
+              <div
+                class="absolute inset-0 w-full h-full"
+                style="background-image: repeating-conic-gradient(#d1d5db 0% 25%, #e5e7eb 0% 50%); background-size: 24px 24px;"
+              />
+            )}
+          </div>
+
+          <!-- Info -->
+          <div class="space-y-1">
+            <p class="text-xs font-semibold tracking-widest text-black uppercase group-hover:text-violet-600 transition-colors">
+              {product.name}
+            </p>
+            <p class="text-xs font-medium text-gray-500 tracking-wide">
+              {formatPrice(product.price)}
+            </p>
+          </div>
+
+        </a>
+      ))}
+    </div>
+
+  </div>
+</section>

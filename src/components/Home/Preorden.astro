@@ -1,0 +1,46 @@
+---
+interface Props {
+  badge?: string;
+  title?: string;
+  description?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
+const {
+  badge       = "Exclusivo",
+  title       = "Reserva lo Inédito.",
+  description = "Obtén acceso anticipado a hardware de edición limitada y licencias de software exclusivas. Fabricado estrictamente bajo demanda.",
+  ctaLabel    = "Ver Pre-Órdenes",
+  ctaHref     = "/preordenes",
+} = Astro.props;
+---
+
+<section class="w-full bg-gray-100 py-24 px-4 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-2xl flex flex-col items-center text-center gap-6">
+
+    <!-- Badge -->
+    <span class="text-xs font-semibold tracking-[0.3em] text-violet-500 uppercase">
+      {badge}
+    </span>
+
+    <!-- Heading -->
+    <h2 class="text-5xl sm:text-6xl lg:text-7xl font-extralight tracking-tight text-gray-900 uppercase leading-none">
+      {title}
+    </h2>
+
+    <!-- Description -->
+    <p class="text-sm text-gray-500 leading-relaxed max-w-sm">
+      {description}
+    </p>
+
+    <!-- CTA Button -->
+    <a
+      href={ctaHref}
+      class="mt-2 inline-flex items-center justify-center bg-violet-600 hover:bg-violet-700 active:bg-violet-800 text-white text-xs font-semibold tracking-widest uppercase px-10 py-4 transition-colors duration-200"
+    >
+      {ctaLabel}
+    </a>
+
+  </div>
+</section>
